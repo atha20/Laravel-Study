@@ -83,6 +83,15 @@ Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [AuthController::class, 'registering'])->middleware('guest');
 
+Route::get('/users', [AuthController::class, 'index'])->middleware(['auth', 'must-admin']);
+// Route::get('/user/{id}', [AuthController::class, 'show'])->middleware(['auth', 'must-admin']);
+Route::get('/user-edit/{id}', [AuthController::class, 'edit'])->middleware(['auth', 'must-admin']);
+Route::put('/user/{id}', [AuthController::class, 'update'])->middleware(['auth', 'must-admin']);
+// Route::get('/user-delete/{id}', [AuthController::class, 'delete'])->middleware(['auth', 'must-admin']);
+// Route::delete('/user-destroy/{id}', [AuthController::class, 'destroy'])->middleware(['auth', 'must-admin']);
+// Route::get('/user-deleted', [AuthController::class, 'deletedUser'])->middleware(['auth', 'must-admin']);
+// Route::get('/user/{id}/restore', [AuthController::class, 'restore'])->middleware(['auth', 'must-admin']);
+
 
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
 // 

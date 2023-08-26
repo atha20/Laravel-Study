@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,5 +78,28 @@ class AuthController extends Controller
         }
 
         return redirect('/login');
+    }
+
+    /////////
+
+    public function index()
+    {
+        $user = User::with('role')->get();
+        return view ('user', ['userList' => $user]);
+    }
+    
+    public function edit(Request $request, $id)     
+    {
+        
+        $user = User::with('role')->findOrFail($id);
+        $role = Role::where('id', '!=', $user->role_id)->get(['id', 'name']);
+        return view('user-edit', ['user' => $user, 'role' => $role]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect('/users');
     }
 }

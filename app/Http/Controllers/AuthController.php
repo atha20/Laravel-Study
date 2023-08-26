@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
-        Session::flash('status', 'failed');
+        Session::flash('statusFailed', 'failed');
         Session::flash('message', 'Login failed !!!');
 
         return redirect('/login');
@@ -41,28 +42,40 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
-    // public function register()
-    // {
-    //     return view('register');
-    // }
+    public function register()
+    {
+        return view('register');
+    }
 
-    // public function registering(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'confirmed'],
-    //     ]);
+    public function registering(Request $request)
+    {
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'role_id' => 'required',
+        //     'password' => 'required|confirmed',
+        // ]);
+        // dd($request->all());
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'role_id' => 3,
+        //     'password' => Hash::make($request->password),
+        // ]); 
+        // $user = User::create($request->all());
 
-    //     $user = User::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = 3;
+        $user->password = $request->password;
+        $user->save();
 
-    //     Session::flash('status', 'success');
-    //     Session::flash('message', 'You are registered !!!');
+        if ($user) {
+            Session::flash('statusSuccess', 'success');
+            Session::flash('message', 'You are registered!!!');
+        }
 
-    //     return redirect('/login');
-    // }
+        return redirect('/login');
+    }
 }

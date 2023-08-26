@@ -20,14 +20,24 @@
 <body>
 
     <div class="vh-100 d-flex justify-content-center align-items-center flex-column">
-        @if (Session::has('status'))
+        @if (Session::has('statusFailed'))
+            {{-- @if ('status', 'failed')
             <div class="alert alert-danger login-box center text-center" role="alert">
+                {{Session::get('message')}}
+            </div>
+            @endif --}}
+            <div class="alert alert-danger login-box center text-center" role="alert">
+                {{Session::get('message')}}
+            </div>
+        @endif
+        @if (Session::has('statusSuccess'))
+            <div class="alert alert-success login-box center text-center" role="alert">
                 {{Session::get('message')}}
             </div>
         @endif
 
         <div class="login-box">
-            <form action="" method="POST">
+            <form action="login" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -40,9 +50,9 @@
                 <div class="mb-3">
                     <button class="btn btn-primary form-control" type="submit">Login</button>
                 </div>
-                {{-- <div class="mb-3">
+                <div class="mb-3">
                     <a href="/register" class="btn btn-success form-control" type="submit">Register</a>
-                </div> --}}
+                </div>
         </form>
         </div>
     </div>

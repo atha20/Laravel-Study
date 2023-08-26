@@ -80,8 +80,8 @@ Route::get('/login', [AuthController::class, 'login'])->name('login')->middlewar
 Route::post('/login', [AuthController::class, 'authenticating'])->middleware('guest');
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
-// Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
-// Route::post('/register', [AuthController::class, 'registering'])->middleware('guest');
+Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
+Route::post('/register', [AuthController::class, 'registering'])->middleware('guest');
 
 
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
